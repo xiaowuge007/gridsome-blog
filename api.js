@@ -7,7 +7,7 @@ const instance = axios.create();
 * */
 const getPeople = async (actions) => {
 	// 获取所有用户信息
-	const { data } = await instance.get('http://localhost:1337/people')
+	const { data } = await instance.get('http://106.75.169.210:1337/people')
 
 	// 获取当前用户信息
 	const curUser = data.filter((user) => user.name === userConfig.name)[0]
@@ -19,7 +19,7 @@ const getPeople = async (actions) => {
 	userConfig.avatar_url = curUser.avatar_url;
 	//添加博主信息
 	actions.addMetadata('configuration',userConfig)
-	actions.addMetadata('assetsBase','http://localhost:1337')
+	actions.addMetadata('assetsBase','http://106.75.169.210:1337')
 
 	/*
 	* 添加用户信息
