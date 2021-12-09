@@ -18,7 +18,7 @@ jobs:
       uses: actions/setup-node@master
     - run: npm install
     - run: npm run build
-    - run: tar -zcvf release.tgz dist/*
+    - run: tar -zcvf release.tgz dist
 
     # 发布 Release
     - name: Create Release
@@ -43,3 +43,19 @@ jobs:
         asset_path: ./release.tgz
         asset_name: release.tgz
         asset_content_type: application/x-tgz
+
+    # 部署到服务器
+    - name: Deploy
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        port: ${{ secrets.PORT }}
+        script: |
+          cd /home/project/node-serve/
+          rm -rf dist/*
+          wget https://github.com/xiaowuge007/gridsome-blog/releases/latest/download/release.tgz -O release.tgz
+          tar zxvf release.tgz
+          npm install --production
+          pm2 reload pm2.config.json
