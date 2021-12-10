@@ -7,7 +7,7 @@ const merge = require('webpack-merge')
 
 module.exports = {
   siteName: 'Gridsome',
-  pathPrefix: '/app',
+  // pathPrefix: '/app',
   plugins: [
     {
       use: '@gridsome/source-strapi',
